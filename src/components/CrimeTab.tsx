@@ -3,7 +3,7 @@
 import BasicChart from './charts/BasicChart';
 import CrimeTypeChart from './charts/CrimeTypeChart';
 
-export default function BicycleTab() {
+export default function CrimeTab() {
   return (
     <>
       <div className="border-b-8 border-white px-4 py-8">
