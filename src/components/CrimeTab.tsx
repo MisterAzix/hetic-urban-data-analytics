@@ -1,7 +1,12 @@
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-import { ChartConfig, ChartContainer } from '@/components/ui/chart';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
 
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },
@@ -35,6 +40,7 @@ export default function BicycleTab() {
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
+        <ChartTooltip content={<ChartTooltipContent />} />
         <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
         <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
       </BarChart>
