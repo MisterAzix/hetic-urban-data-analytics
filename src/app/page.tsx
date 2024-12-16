@@ -1,3 +1,5 @@
+import BicycleTab from '@/components/BicycleTab';
+import CrimeTab from '@/components/CrimeTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CctvIcon, BikeIcon } from 'lucide-react';
 
@@ -18,10 +20,10 @@ export default function Home() {
           </TabsList>
           <div className="bg-muted text-muted-foreground rounded-lg py-4">
             <TabsContent value="crime" className="flex justify-center m-0">
-              <p className="italic">Onglet pour la criminalité</p>
+              <CrimeTab />
             </TabsContent>
             <TabsContent value="bicycle" className="flex justify-center m-0">
-              <p className="italic">Onglet pour les vélos</p>
+              <BicycleTab />
             </TabsContent>
           </div>
         </Tabs>
