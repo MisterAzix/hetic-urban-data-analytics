@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
     "start": "next start",
     "lint": "next lint"
   },
