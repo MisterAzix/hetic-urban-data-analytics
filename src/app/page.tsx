@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
-import { LayoutDashboard } from "lucide-react"
+import { LayoutDashboard } from 'lucide-react';
 
 export default function Home() {
   return (
