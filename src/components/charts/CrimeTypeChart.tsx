@@ -26,7 +26,10 @@ export default function CrimeTypeChart() {
   return (
     <ChartContainer config={chartConfig} className="mx-auto max-h-64">
       <RadarChart data={chartData}>
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+        <ChartTooltip
+          content={<ChartTooltipContent />}
+          isAnimationActive={false}
+        />
         <PolarAngleAxis dataKey="type" />
         <PolarGrid />
         <Radar
