@@ -1,3 +1,7 @@
 export default function BicycleTab() {
-  return <p className="italic">Onglet pour les vélos</p>;
+  return (
+    <div className="py-4">
+      <p className="text-center italic">Onglet pour les vélos</p>
+    </div>
+  );
 }
