@@ -11,7 +11,11 @@ export default function BicycleTab() {
   const mainPosition: LatLngExpression = [48.864716, 2.349014];
 
   return (
-    <MapContainer center={mainPosition} zoom={10} className="h-[512px] w-full">
+    <MapContainer
+      center={mainPosition}
+      zoom={10}
+      className="h-[512px] w-full rounded-lg"
+    >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Marker position={mainPosition}>
         <Popup>Paris</Popup>
