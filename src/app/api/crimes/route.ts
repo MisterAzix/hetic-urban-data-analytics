@@ -8,11 +8,6 @@ export async function GET() {
     'https://data.cityofnewyork.us/resource/mv4k-y93f.json',
   );
   const crimes = await data.json();
-  console.log(
-    '========data========',
-    crimes[0].summons_date,
-    typeof crimes[0].summons_date,
-  );
 
   try {
     for (const crime of crimes) {
@@ -62,6 +57,7 @@ export async function GET() {
 
       await prisma.crime.create({
         data: {
+          external_id: crime.summons_key,
           latitude: crime.latitude,
           longitude: crime.longitude,
           age_group: age_group,
