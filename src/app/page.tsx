@@ -6,7 +6,7 @@ import { CctvIcon, BikeIcon } from 'lucide-react';
 export default function Home() {
   return (
     <main className="container mx-auto max-w-screen-lg px-4 py-8">
-      <h1 className="mb-2 text-3xl font-bold">NYC Urban Data</h1>
+      <h1 className="mb-2 text-3xl font-bold">🏙️ NYC Urban Data</h1>
       <div>
         <Tabs defaultValue="crime">
           <TabsList className="w-full">

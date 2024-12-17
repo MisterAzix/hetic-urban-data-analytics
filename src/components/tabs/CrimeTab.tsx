@@ -7,7 +7,7 @@ export default function CrimeTab() {
   return (
     <div className="flex gap-2">
       <div className="card">
-        <h2 className="p-4 text-2xl font-semibold">Type de criminalité</h2>
+        <h2 className="p-4 text-2xl font-semibold">Types de crimes</h2>
         <div className="chart">
           <CrimeTypeChart />
         </div>
