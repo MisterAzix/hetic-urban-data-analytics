@@ -12,3 +12,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum NEW_YORK_BOROUGH {
+  BROOKLYN
+  BRONX
+  STATEN_ISLAND
+  NEW_YORK
+  QUEENS
+  MANHATTAN
+}
+
+enum AGE_GROUP {
+  LESS_THAN_18
+  AGE_18_TO_24
+  AGE_25_TO_44
+  AGE_45_TO_64
+  AGE_65_PLUS
+  UNKNOWN
+}
+
+model Crime {
+  id                  String           @id @default(uuid())
+  latitude            String
+  longitude           String
+  age_group           AGE_GROUP
+  sex                 String?
+  race                String?
+  summons_date        DateTime
+  offense_description String
+  borough             NEW_YORK_BOROUGH
+}
+
+model BikeStation {
+  id             String   @id
+  name           String
+  latitude       Decimal  @db.Decimal(10, 8)
+  longitude      Decimal  @db.Decimal(11, 8)
+  timestamp      DateTime
+  free_bikes     Int
+  total_capacity Int
+  empty_slots    Int
+}
