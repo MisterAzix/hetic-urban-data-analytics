@@ -15,6 +15,9 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "leaflet": "^1.9.4",
+    "leaflet-defaulticon-compatibility": "^0.1.2",
+    "leaflet.heat": "^0.2.0",
     "lucide-react": "^0.468.0",
     "next": "14.2.20",
     "prettier": "^3.4.2",
@@ -27,6 +30,8 @@
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
+    "@types/leaflet": "^1.9.15",
+    "@types/leaflet.heat": "^0.2.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
