@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { connectToDatabase, closeDatabaseConnection } from '../src/database'; // Remplacez par le chemin correct
 
+
 jest.mock('some-database-library', () => {
   return {
     connect: jest.fn(() => Promise.resolve({ connected: true })),
