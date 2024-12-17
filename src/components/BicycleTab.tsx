@@ -5,10 +5,10 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 
 import { LatLngExpression } from 'leaflet';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 
 export default function BicycleTab() {
-  const mainPosition: LatLngExpression = [48.864716, 2.349014];
+  const mainPosition: LatLngExpression = [40.73061, -73.935242];
 
   return (
     <MapContainer
@@ -16,10 +16,8 @@ export default function BicycleTab() {
       zoom={10}
       className="h-[512px] w-full rounded-lg"
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={mainPosition}>
-        <Popup>Paris</Popup>
-      </Marker>
+      <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
+      <Marker position={mainPosition} />
     </MapContainer>
   );
 }
