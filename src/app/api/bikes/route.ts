@@ -4,10 +4,10 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   // Getting the data from the database
   const data = await fetch('http://api.citybik.es/v2/networks/citi-bike-nyc');
-  const { stations } = await data.json();
+  const bikeStations = await data.json();
 
-  for (const station of stations) {
-    try {
+  try {
+    for (const station of bikeStations.network.stations) {
       await prisma.bikeStation.create({
         data: {
           external_id: station.id,
@@ -20,11 +20,10 @@ export async function GET() {
           total_capacity: station.extra.slots,
         },
       });
-
-      console.log('========data inserted========');
-    } catch (error) {
-      console.error('========error========', error);
     }
+    console.log('========data inserted========');
+  } catch (error) {
+    console.error('========error========', error);
   }
 
   return NextResponse.json({ message: 'hello' });
