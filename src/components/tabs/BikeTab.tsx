@@ -7,7 +7,7 @@ export default function BikeTab() {
       <div className="card h-auto">
         <BikeStationChart />
       </div>
-      <div className="card">
+      <div className="card pb-0">
         <Map />
       </div>
     </div>

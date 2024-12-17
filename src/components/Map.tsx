@@ -41,5 +41,5 @@ export default function Map() {
     ).addTo(mapRef.current);
   }, []);
 
-  return <div id="map" className="h-full"></div>;
+  return <div id="map" className="h-[512px]"></div>;
 }
