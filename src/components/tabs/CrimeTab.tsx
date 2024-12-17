@@ -1,5 +1,5 @@
-import BasicChart from '@/components/charts/BasicChart';
 import CrimeTypeChart from '@/components/charts/CrimeTypeChart';
+import CrimeAgeGroupChart from '@/components/charts/CrimeAgeGroupChart';
 
 export default function CrimeTab() {
   return (
@@ -11,9 +11,9 @@ export default function CrimeTab() {
         </div>
       </div>
       <div className="card">
-        <h2 className="p-4 text-2xl font-semibold">Graphique basique</h2>
+        <h2 className="p-4 text-2xl font-semibold">Groupes d&apos;âge</h2>
         <div className="chart">
-          <BasicChart />
+          <CrimeAgeGroupChart />
         </div>
       </div>
     </div>

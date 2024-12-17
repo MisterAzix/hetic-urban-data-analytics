@@ -29,7 +29,7 @@ export default function CrimeTypeChart() {
     <ChartContainer config={chartConfig} className="h-64">
       <RadarChart data={chartData}>
         <ChartTooltip
-          content={<ChartTooltipContent />}
+          content={<ChartTooltipContent hideLabel={true} />}
           isAnimationActive={false}
         />
         <PolarAngleAxis dataKey="type" />
