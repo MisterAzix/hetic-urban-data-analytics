@@ -9,6 +9,7 @@ datasource db {
 
 model Crime {
   id                  String           @id @default(uuid())
+  external_id         String
   latitude            String
   longitude           String
   age_group           AGE_GROUP
@@ -20,7 +21,8 @@ model Crime {
 }
 
 model BikeStation {
-  id             String   @id
+  id             String   @id @default(uuid())
+  external_id    String
   name           String
   latitude       Decimal  @db.Decimal(10, 8)
   longitude      Decimal  @db.Decimal(11, 8)
