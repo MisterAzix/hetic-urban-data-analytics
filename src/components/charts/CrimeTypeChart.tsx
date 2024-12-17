@@ -24,7 +24,7 @@ const chartConfig = {
 
 export default function CrimeTypeChart() {
   return (
-    <ChartContainer config={chartConfig} className="mx-auto max-h-64">
+    <ChartContainer config={chartConfig} className="h-64">
       <RadarChart data={chartData}>
         <ChartTooltip
           content={<ChartTooltipContent />}

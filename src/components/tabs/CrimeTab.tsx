@@ -5,15 +5,19 @@ import CrimeTypeChart from '../charts/CrimeTypeChart';
 
 export default function CrimeTab() {
   return (
-    <>
-      <div className="mb-2 rounded-lg bg-muted px-4 py-8">
-        <h2 className="mb-4 text-2xl font-semibold">Type de criminalité</h2>
-        <CrimeTypeChart />
+    <div className="flex gap-2">
+      <div className="card">
+        <h2 className="p-4 text-2xl font-semibold">Type de criminalité</h2>
+        <div className="chart">
+          <CrimeTypeChart />
+        </div>
       </div>
-      <div className="rounded-lg bg-muted px-4 py-8">
-        <h2 className="mb-4 text-2xl font-semibold">Graphique basique</h2>
-        <BasicChart />
+      <div className="card">
+        <h2 className="p-4 text-2xl font-semibold">Graphique basique</h2>
+        <div className="chart">
+          <BasicChart />
+        </div>
       </div>
-    </>
+    </div>
   );
 }

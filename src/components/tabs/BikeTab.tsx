@@ -41,5 +41,5 @@ export default function BikeTab() {
     ).addTo(mapRef.current);
   }, []);
 
-  return <div id="map" className="h-[512px] w-full rounded-lg"></div>;
+  return <div id="map" className="card"></div>;
 }

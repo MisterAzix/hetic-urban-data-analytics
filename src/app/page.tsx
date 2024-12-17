@@ -19,14 +19,12 @@ export default function Home() {
               Vélos
             </TabsTrigger>
           </TabsList>
-          <div className="text-muted-foreground">
-            <TabsContent value="crime">
-              <CrimeTab />
-            </TabsContent>
-            <TabsContent value="bike">
-              <BikeTab />
-            </TabsContent>
-          </div>
+          <TabsContent value="crime">
+            <CrimeTab />
+          </TabsContent>
+          <TabsContent value="bike">
+            <BikeTab />
+          </TabsContent>
         </Tabs>
       </div>
     </main>
