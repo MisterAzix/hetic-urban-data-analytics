@@ -8,7 +8,10 @@ export async function GET() {
     return NextResponse.json(bikeStations);
   } catch (error) {
     console.error('Error retrieving bike stations:', error);
-    return NextResponse.json({ error: 'Failed to fetch bike stations' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch bike stations' },
+      { status: 500 },
+    );
   }
 }
 
@@ -33,7 +36,10 @@ export async function POST(req: Request) {
     return NextResponse.json(newBikeStation, { status: 201 });
   } catch (error) {
     console.error('Error creating bike station:', error);
-    return NextResponse.json({ error: 'Failed to create bike station' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to create bike station' },
+      { status: 500 },
+    );
   }
 }
 
@@ -44,7 +50,10 @@ export async function PUT(req: Request) {
     const { id, ...updateData } = body;
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required for update' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'ID is required for update' },
+        { status: 400 },
+      );
     }
 
     const updatedBikeStation = await prisma.bikeStation.update({
@@ -55,7 +64,15 @@ export async function PUT(req: Request) {
     return NextResponse.json(updatedBikeStation);
   } catch (error) {
     console.error('Error updating bike station:', error);
-    return NextResponse.json({ error: 'Failed to update bike station', details: (error as any).message }, { status: 500 });
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json(
+      {
+        error: 'Failed to update bike station',
+        details: errorMessage,
+      },
+      { status: 500 },
+    );
   }
 }
 
@@ -66,16 +83,29 @@ export async function DELETE(req: Request) {
     const id = searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required for deletion' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'ID is required for deletion' },
+        { status: 400 },
+      );
     }
 
     await prisma.bikeStation.delete({
       where: { id: id },
     });
 
-    return NextResponse.json({ message: `Bike station with ID ${id} deleted successfully` });
+    return NextResponse.json({
+      message: `Bike station with ID ${id} deleted successfully`,
+    });
   } catch (error) {
     console.error('Error deleting bike station:', error);
-    return NextResponse.json({ error: 'Failed to delete bike station', details: (error as any).message }, { status: 500 });
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json(
+      {
+        error: 'Failed to delete bike station',
+        details: errorMessage,
+      },
+      { status: 500 },
+    );
   }
 }
