@@ -17,9 +17,6 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.16))(@types/react@18.3.16)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/leaflet':
-        specifier: ^1.9.15
-        version: 1.9.15
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -66,6 +63,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.6.0
         version: 19.6.0
+      '@types/leaflet':
+        specifier: ^1.9.15
+        version: 1.9.15
       '@types/leaflet.heat':
         specifier: ^0.2.4
         version: 0.2.4
