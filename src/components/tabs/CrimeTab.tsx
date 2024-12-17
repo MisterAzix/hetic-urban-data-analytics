@@ -1,7 +1,7 @@
 'use client';
 
-import BasicChart from '../charts/BasicChart';
-import CrimeTypeChart from '../charts/CrimeTypeChart';
+import BasicChart from '@/components/charts/BasicChart';
+import CrimeTypeChart from '@/components/charts/CrimeTypeChart';
 
 export default function CrimeTab() {
   return (
