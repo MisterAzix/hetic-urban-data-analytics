@@ -41,5 +41,5 @@ export default function Map() {
     ).addTo(mapRef.current);
   }, []);
 
-  return <div id="map" className="card"></div>;
+  return <div id="map" className="h-full"></div>;
 }

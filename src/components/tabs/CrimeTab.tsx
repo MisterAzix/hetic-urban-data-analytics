@@ -1,5 +1,3 @@
-'use client';
-
 import BasicChart from '@/components/charts/BasicChart';
 import CrimeTypeChart from '@/components/charts/CrimeTypeChart';
 
