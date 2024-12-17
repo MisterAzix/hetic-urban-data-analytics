@@ -42,30 +42,30 @@ pnpm dev
 
 ### Crime
 
-| Champ               | Type             | Attributs            |
-| ------------------- | ---------------- | -------------------- |
-| id                  | String           | @id @default(uuid()) |
-| latitude            | String           |                      |
-| longitude           | String           |                      |
-| age_group           | AGE_GROUP        |                      |
-| sex                 | String?          |                      |
-| race                | String?          |                      |
-| summons_date        | DateTime         |                      |
-| offense_description | String           |                      |
-| borough             | NEW_YORK_BOROUGH |                      |
+| Field               | Type             |
+| ------------------- | ---------------- |
+| id                  | String           |
+| latitude            | String           |
+| longitude           | String           |
+| age_group           | AGE_GROUP        |
+| sex                 | String?          |
+| race                | String?          |
+| summons_date        | DateTime         |
+| offense_description | String           |
+| borough             | NEW_YORK_BOROUGH |
 
 ### BikeStation
 
-| Champ          | Type     | Attributs          |
-| -------------- | -------- | ------------------ |
-| id             | String   | @id                |
-| name           | String   |                    |
-| latitude       | Decimal  | @db.Decimal(10, 8) |
-| longitude      | Decimal  | @db.Decimal(11, 8) |
-| timestamp      | DateTime |                    |
-| free_bikes     | Int      |                    |
-| total_capacity | Int      |                    |
-| empty_slots    | Int      |                    |
+| Field          | Type     |
+| -------------- | -------- |
+| id             | String   |
+| name           | String   |
+| latitude       | Decimal  |
+| longitude      | Decimal  |
+| timestamp      | DateTime |
+| free_bikes     | Int      |
+| total_capacity | Int      |
+| empty_slots    | Int      |
 
 ## 👤️ Authors 👤
 
