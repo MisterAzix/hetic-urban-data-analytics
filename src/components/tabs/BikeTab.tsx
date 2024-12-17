@@ -8,7 +8,7 @@ import L from 'leaflet';
 import 'leaflet.heat';
 import React, { useEffect, useRef } from 'react';
 
-export default function BicycleTab() {
+export default function BikeTab() {
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {

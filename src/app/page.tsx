@@ -1,5 +1,5 @@
-import BicycleTab from '@/components/BicycleTab';
-import CrimeTab from '@/components/CrimeTab';
+import BikeTab from '@/components/tabs/BikeTab';
+import CrimeTab from '@/components/tabs/CrimeTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CctvIcon, BikeIcon } from 'lucide-react';
 
@@ -14,7 +14,7 @@ export default function Home() {
               <CctvIcon size={16} strokeWidth={1} className="mr-1" />
               Criminalité
             </TabsTrigger>
-            <TabsTrigger value="bicycle" className="w-1/2">
+            <TabsTrigger value="bike" className="w-1/2">
               <BikeIcon size={16} strokeWidth={1} className="mr-1" />
               Vélos
             </TabsTrigger>
@@ -23,8 +23,8 @@ export default function Home() {
             <TabsContent value="crime">
               <CrimeTab />
             </TabsContent>
-            <TabsContent value="bicycle">
-              <BicycleTab />
+            <TabsContent value="bike">
+              <BikeTab />
             </TabsContent>
           </div>
         </Tabs>
