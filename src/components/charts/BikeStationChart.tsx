@@ -38,7 +38,7 @@ export default function Component({ data }: { data: BikeStation[] }) {
       free_bikes: chartData.reduce((acc, curr) => acc + curr.free_bikes, 0),
       empty_slots: chartData.reduce((acc, curr) => acc + curr.empty_slots, 0),
     }),
-    [],
+    [chartData],
   );
 
   return (

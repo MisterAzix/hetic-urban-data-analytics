@@ -24,7 +24,7 @@ export default function Map({ data }: { data: L.HeatLatLngTuple[] }) {
     ).addTo(mapRef.current);
 
     L.heatLayer(data, { radius: 20 }).addTo(mapRef.current);
-  }, []);
+  }, [data]);
 
   return <div id="map" className="h-[512px]"></div>;
 }
