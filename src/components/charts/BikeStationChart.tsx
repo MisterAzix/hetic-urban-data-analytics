@@ -105,6 +105,7 @@ export default function Component({ data }: { data: BikeStation[] }) {
                 }}
               />
             }
+            animationDuration={0}
           />
           <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
         </BarChart>
