@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { BikeService } from '@/servcices/bike.service';
-import { wrapper } from '@/lib/wrapper/wrapper';
+import { BikeService } from '@/services/bike.service';
+import { wrapperWithoutContext } from '@/lib/wrapper/wrapper';
 
 // GET: Retrieve all bike stations from the database
-export const GET = wrapper(async (req: Request) => {
+export const GET = wrapperWithoutContext(async (req: Request) => {
   const bikeService = new BikeService(process.env.BIKE_API_URL);
    const { searchParams } = new URL(req.url);
     const latitude = searchParams.get('latitude');

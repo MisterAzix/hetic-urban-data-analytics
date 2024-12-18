@@ -36,6 +36,10 @@ export class CrimeService {
     return prisma.crime.findMany({ where: filter });
   }
 
+  async getCrimeById(id: string) {
+    return prisma.crime.findUnique({ where: { id } });
+  }
+
   async createCrimes() {
     try {
       const response = await fetch(this.apiUrl);

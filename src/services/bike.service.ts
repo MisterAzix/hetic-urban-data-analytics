@@ -18,6 +18,12 @@ export class BikeService {
     this.apiUrl = apiUrl;
   }
 
+  async getBikeStationById(id: string) {
+    return prisma.bikeStation.findUnique({
+      where: { id },
+    });
+  }
+
   async getBikeStations({
     latitude,
     longitude,
