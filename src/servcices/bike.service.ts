@@ -25,14 +25,16 @@ export class BikeService {
     empty_slots,
     total_capacity,
   }: GetBikeStationsParams) {
+    const filters = {
+      latitude: latitude ? Number(latitude) : undefined,
+      longitude: longitude ? Number(longitude) : undefined,
+      free_bikes: free_bikes ? Number(free_bikes) : undefined,
+      empty_slots: empty_slots ? Number(empty_slots) : undefined,
+      total_capacity: total_capacity ? Number(total_capacity) : undefined,
+    };
+
     return prisma.bikeStation.findMany({
-      where: {
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-        free_bikes: Number(free_bikes),
-        empty_slots: Number(empty_slots),
-        total_capacity: Number(total_capacity),
-      },
+      where: filters,
     });
   }
 
