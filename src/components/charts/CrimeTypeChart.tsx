@@ -9,15 +9,6 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-interface OffenseCounts {
-  RECKLESS_DRIVING: number;
-  ALCOHOLIC_BEVERAGE_IN_PUBLIC: number;
-  CONSUMPTION_OF_ALCOHOL_IN_VEHICLE: number;
-  FEDERAL_MOTOR_VEH__SAFETY_REG: number;
-  OPERATION_WHILE_REGISTRATION_OR_PRIVILEGE_IS_SUSPENDED_OR_REVOKED: number;
-  TRESPASS: number;
-}
-
 const chartConfig = {
   crimes: {
     label: 'Crimes',
@@ -25,7 +16,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function CrimeTypeChart({ data }: { data: OffenseCounts }) {
+export default function CrimeTypeChart({
+  data,
+}: {
+  data: { [key: string]: number };
+}) {
   const chartData = [
     {
       type: 'Conduite dangereuse',
