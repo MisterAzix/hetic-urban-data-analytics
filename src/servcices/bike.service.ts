@@ -1,5 +1,13 @@
 import prisma from '@/lib/prisma';
 
+export type GetBikeStationsParams = Partial<{
+  latitude: number;
+  longitude: number;
+  free_bikes: number;
+  empty_slots: number;
+  total_capacity: number;
+}>;
+
 export class BikeService {
   private readonly apiUrl: string;
 
@@ -10,8 +18,22 @@ export class BikeService {
     this.apiUrl = apiUrl;
   }
 
-  async getBikeStations() {
-    return prisma.bikeStation.findMany();
+  async getBikeStations({
+    latitude,
+    longitude,
+    free_bikes,
+    empty_slots,
+    total_capacity,
+  }: GetBikeStationsParams) {
+    return prisma.bikeStation.findMany({
+      where: {
+        latitude,
+        longitude,
+        free_bikes,
+        empty_slots,
+        total_capacity,
+      },
+    });
   }
 
   async createBikeStations() {
