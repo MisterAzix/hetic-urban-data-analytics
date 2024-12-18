@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 
 export type GetBikeStationsParams = Optional<{
   latitude: string;
@@ -41,28 +42,84 @@ export class BikeService {
 
     return prisma.bikeStation.findMany({
       where: filters,
+      include: {
+        BikeStationHistory: true, // Include related BikeStationHistory records
+      },
     });
   }
 
-  async createBikeStations() {
+  async createBikeStation(createBikeStationDto: Prisma.BikeStationCreateInput) {
+    return await prisma.bikeStation.create({ data: createBikeStationDto });
+  }
+
+  async updateBikeStation(
+    id: string,
+    updateBikeStationDto: Prisma.BikeStationUpdateInput,
+  ) {
+    return await prisma.bikeStation.update({
+      where: { id },
+      data: updateBikeStationDto,
+    });
+  }
+
+  async createBikeStationHistory(
+    createBikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput,
+  ) {
+    return await prisma.bikeStationHistory.create({
+      data: createBikeStationHistoryDto,
+    });
+  }
+
+  async fetchBikeStationsFromApi() {
     try {
+      console.log('======Fetching bike stations from API======');
+
       const response = await fetch(this.apiUrl);
       const data = await response.json();
       const bikeStations = data.network.stations;
 
       for (const station of bikeStations) {
-        await prisma.bikeStation.create({
-          data: {
-            external_id: station.id,
-            name: station.name,
-            latitude: station.latitude,
-            longitude: station.longitude,
-            timestamp: station.timestamp,
-            free_bikes: station.free_bikes,
-            empty_slots: station.empty_slots,
-            total_capacity: station.extra.slots,
-          },
+        const existingStation = await prisma.bikeStation.findUnique({
+          where: { external_id: station.id },
         });
+
+        const newData = {
+          name: station.name as string,
+          latitude: station.latitude as number,
+          longitude: station.longitude as number,
+          timestamp: station.timestamp as Date,
+          free_bikes: station.free_bikes as number,
+          empty_slots: station.empty_slots as number,
+          total_capacity: station.extra.slots as number,
+          external_id: station.id as string,
+        };
+
+        if (existingStation) {
+          // Check if data has changed
+          const fieldsToCompare = ['free_bikes', 'empty_slots'] as const;
+
+          const hasChanged = fieldsToCompare.some(
+            (key) => newData[key] !== existingStation[key],
+          );
+
+          if (hasChanged) {
+            // Save the current state to BikeStationHistory
+            const bikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput =
+              {
+                bikeStation: { connect: { id: existingStation.id } },
+                timestamp: existingStation.timestamp,
+                free_bikes: existingStation.free_bikes,
+                empty_slots: existingStation.empty_slots,
+              };
+            await this.createBikeStationHistory(bikeStationHistoryDto);
+
+            // Update the BikeStation with new data
+            await this.updateBikeStation(existingStation.id, newData);
+          }
+        } else {
+          // Create a new BikeStation if it doesn't exist
+          await this.createBikeStation(newData);
+        }
       }
     } catch (error) {
       console.error('Error fetching bike API!', error);
