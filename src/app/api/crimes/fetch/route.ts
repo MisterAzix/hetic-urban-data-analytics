@@ -1,4 +1,4 @@
-import { formatAgeGroup, formatBorough } from '@/lib/crimes.utils';
+import { formatAgeGroup, formatBorough } from '@/lib/crimes.';
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
