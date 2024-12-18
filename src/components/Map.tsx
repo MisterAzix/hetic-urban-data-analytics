@@ -8,7 +8,7 @@ import L from 'leaflet';
 import 'leaflet.heat';
 import React, { useEffect, useRef } from 'react';
 
-export default function BicycleTab() {
+export default function Map() {
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
@@ -41,5 +41,5 @@ export default function BicycleTab() {
     ).addTo(mapRef.current);
   }, []);
 
-  return <div id="map" className="h-[512px] w-full rounded-lg"></div>;
+  return <div id="map" className="h-[512px]"></div>;
 }

@@ -12,6 +12,16 @@ body {
   }
 }
 
+@layer components {
+  .card {
+    @apply flex w-full flex-col overflow-hidden rounded-lg bg-muted pb-4 text-muted-foreground;
+  }
+
+  .chart {
+    @apply flex grow items-center justify-center;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
