@@ -1,9 +1,11 @@
-import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { BikeService } from '@/servcices/bike.service';
 
 export async function GET() {
+  const bikeService = new BikeService(process.env.BIKE_API_URL);
+
   try {
-    const bikeStations = await prisma.bikeStation.findMany();
+    const bikeStations = await bikeService.getBikeStations();
     return NextResponse.json(bikeStations);
   } catch (error) {
     console.error('Error retrieving bike stations:', error);

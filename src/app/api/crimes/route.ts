@@ -1,14 +1,18 @@
-import {
-  formatAgeGroup,
-  formatBorough,
-  GetCrimesParams,
-} from '@/lib/crimes.utils';
-import prisma from '@/lib/prisma';
-import { AGE_GROUP, NEW_YORK_BOROUGH } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { AGE_GROUP, NEW_YORK_BOROUGH } from '@prisma/client';
+import { CrimeService } from '@/servcices/crime.service';
+
+export type GetCrimesParams = {
+  age_group?: AGE_GROUP;
+  borough?: NEW_YORK_BOROUGH;
+  summons_date?: Date;
+  offense_description?: { contains: string };
+};
 
 // GET: Retrieve crimes from the database
 export async function GET(req: Request) {
+  const crimeService = new CrimeService(process.env.CRIME_API_URL);
+
   try {
     const { searchParams } = new URL(req.url);
     const age_group = searchParams.get('age_group');
@@ -16,22 +20,12 @@ export async function GET(req: Request) {
     const summons_date = searchParams.get('summons_date');
     const offense_description = searchParams.get('offense_description');
 
-    const where: GetCrimesParams = {};
-
-    if (age_group) {
-      where['age_group'] = formatAgeGroup(age_group) as AGE_GROUP;
-    }
-    if (borough) {
-      where['borough'] = formatBorough(borough) as NEW_YORK_BOROUGH;
-    }
-    if (summons_date) {
-      where['summons_date'] = new Date(summons_date);
-    }
-    if (offense_description) {
-      where['offense_description'] = { contains: offense_description };
-    }
-
-    const crimes = await prisma.crime.findMany({ where });
+    const crimes = await crimeService.getCrimes(
+      age_group,
+      borough,
+      summons_date,
+      offense_description,
+    );
     return NextResponse.json(crimes);
   } catch (error) {
     console.error('Error retrieving crimes:', error);

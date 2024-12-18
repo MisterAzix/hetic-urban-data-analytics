@@ -35,11 +35,3 @@ export function formatBorough(borough: string): NEW_YORK_BOROUGH {
       return NEW_YORK_BOROUGH.NEW_YORK;
   }
 }
-
-// Typing the get crimes params
-export type GetCrimesParams = {
-  age_group?: AGE_GROUP;
-  borough?: NEW_YORK_BOROUGH;
-  summons_date?: Date;
-  offense_description?: { contains: string };
-};
