@@ -18,6 +18,31 @@ export default async function CrimeTab() {
   const data = await fetch('http://localhost:3000/api/crimes/');
   const crimes = await data.json();
 
+  let offenseCounts: { [key: string]: number } = {};
+
+  crimes.forEach((crime: Crime) => {
+    const offense = crime.offense_description.replace(
+      /\s+|[?',.*\/:()\-]|[";]/g,
+      '_',
+    );
+    if (offenseCounts[offense]) {
+      offenseCounts[offense]++;
+    } else {
+      offenseCounts[offense] = 1;
+    }
+  });
+
+  offenseCounts = Object.entries(offenseCounts)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 6)
+    .reduce(
+      (acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      },
+      {} as { [key: string]: number },
+    );
+
   const ageGroupCounts = {
     LESS_THAN_18: 0,
     AGE_18_TO_24: 0,
@@ -38,7 +63,7 @@ export default async function CrimeTab() {
       <div className="card">
         <h2 className="p-4 text-2xl font-semibold">Types de crimes</h2>
         <div className="chart">
-          <CrimeTypeChart />
+          <CrimeTypeChart data={offenseCounts} />
         </div>
       </div>
       <div className="card">
