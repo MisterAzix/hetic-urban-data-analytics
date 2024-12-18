@@ -6,8 +6,8 @@
   },
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run test && next dev",
+    "build": "npm run test && next build",
     "test": "jest",
     "start": "next start",
     "lint": "next lint",
