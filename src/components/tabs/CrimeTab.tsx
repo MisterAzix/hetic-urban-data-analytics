@@ -1,8 +1,38 @@
 import CrimeTypeChart from '@/components/charts/CrimeTypeChart';
 import CrimeAgeGroupChart from '@/components/charts/CrimeAgeGroupChart';
-import CrimeFrequencyChart from '../charts/CrimeFrequencyChart';
+import CrimeFrequencyChart from '@/components/charts/CrimeFrequencyChart';
 
-export default function CrimeTab() {
+interface Crime {
+  external_id: string;
+  latitude: string;
+  longitude: string;
+  age_group: string;
+  sex: string;
+  race: string;
+  summons_date: string;
+  offense_description: string;
+  borough: string;
+}
+
+export default async function CrimeTab() {
+  const data = await fetch('http://localhost:3000/api/crimes/');
+  const crimes = await data.json();
+
+  const ageGroupCounts = {
+    LESS_THAN_18: 0,
+    AGE_18_TO_24: 0,
+    AGE_25_TO_44: 0,
+    AGE_45_TO_64: 0,
+    AGE_65_PLUS: 0,
+  };
+
+  crimes.forEach((crime: Crime) => {
+    const ageGroup = crime.age_group as keyof typeof ageGroupCounts;
+    if (ageGroupCounts.hasOwnProperty(ageGroup)) {
+      ageGroupCounts[ageGroup]++;
+    }
+  });
+
   return (
     <div className="grid grid-cols-2 gap-2">
       <div className="card">
@@ -14,7 +44,7 @@ export default function CrimeTab() {
       <div className="card">
         <h2 className="p-4 text-2xl font-semibold">Groupes d&apos;âge</h2>
         <div className="chart">
-          <CrimeAgeGroupChart />
+          <CrimeAgeGroupChart data={ageGroupCounts} />
         </div>
       </div>
       <div className="card col-span-2">

@@ -7,7 +7,6 @@ export async function POST() {
     'https://data.cityofnewyork.us/resource/mv4k-y93f.json',
   );
   const crimes = await data.json();
-  console.log('crimes', crimes);
 
   try {
     for (const crime of crimes) {
