@@ -1,3 +1,5 @@
+'use client';
+
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 import {
   ChartConfig,
@@ -24,9 +26,12 @@ const chartConfig = {
 
 export default function CrimeTypeChart() {
   return (
-    <ChartContainer config={chartConfig} className="mx-auto max-h-64">
+    <ChartContainer config={chartConfig} className="h-64">
       <RadarChart data={chartData}>
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+        <ChartTooltip
+          content={<ChartTooltipContent hideLabel={true} />}
+          isAnimationActive={false}
+        />
         <PolarAngleAxis dataKey="type" />
         <PolarGrid />
         <Radar
