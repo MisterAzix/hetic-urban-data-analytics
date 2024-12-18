@@ -1,8 +1,4 @@
-import {
-  formatAgeGroup,
-  formatBorough,
-  GetCrimesParams,
-} from '@/lib/crimes.utils';
+import { formatAgeGroup, formatBorough, GetCrimesParams } from '@/lib/crimes.';
 import prisma from '@/lib/prisma';
 import { AGE_GROUP, NEW_YORK_BOROUGH } from '@prisma/client';
 import { NextResponse } from 'next/server';
