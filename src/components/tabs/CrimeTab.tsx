@@ -18,6 +18,7 @@ export default async function CrimeTab() {
   const data = await fetch('http://localhost:3000/api/crimes/');
   const crimes = await data.json();
 
+  // Types de crimes
   let offenseCounts: { [key: string]: number } = {};
 
   crimes.forEach((crime: Crime) => {
@@ -43,6 +44,7 @@ export default async function CrimeTab() {
       {} as { [key: string]: number },
     );
 
+  // Groupes d'âge
   const ageGroupCounts = {
     LESS_THAN_18: 0,
     AGE_18_TO_24: 0,
@@ -57,6 +59,35 @@ export default async function CrimeTab() {
       ageGroupCounts[ageGroup]++;
     }
   });
+
+  // Fréquence
+  let monthlyCrimeCounts: { [key: string]: number } = {};
+
+  crimes.forEach((crime: Crime) => {
+    const month = new Date(crime.summons_date)
+      .toLocaleString('en-US', {
+        month: 'long',
+      })
+      .toLowerCase();
+    if (monthlyCrimeCounts[month]) {
+      monthlyCrimeCounts[month]++;
+    } else {
+      monthlyCrimeCounts[month] = 1;
+    }
+  });
+
+  monthlyCrimeCounts = Object.keys(monthlyCrimeCounts)
+    .sort(
+      (a, b) =>
+        new Date(`1970 ${a}`).getTime() - new Date(`1970 ${b}`).getTime(),
+    )
+    .reduce(
+      (acc, key) => {
+        acc[key] = monthlyCrimeCounts[key];
+        return acc;
+      },
+      {} as { [key: string]: number },
+    );
 
   return (
     <div className="grid grid-cols-2 gap-2">
@@ -75,7 +106,7 @@ export default async function CrimeTab() {
       <div className="card col-span-2">
         <h2 className="p-4 text-2xl font-semibold">Fréquence</h2>
         <div className="chart">
-          <CrimeFrequencyChart />
+          <CrimeFrequencyChart data={monthlyCrimeCounts} />
         </div>
       </div>
     </div>
