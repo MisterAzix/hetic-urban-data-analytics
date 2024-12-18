@@ -1,5 +1,6 @@
 import Map from '@/components/Map';
 import BikeStationChart from '@/components/charts/BikeStationChart';
+import { HeatLatLngTuple } from 'leaflet';
 
 interface Bike {
   id: string;
@@ -55,13 +56,23 @@ export default async function BikeTab() {
     return dailyData;
   });
 
+  // Map
+  const bikeStationCoordinates: HeatLatLngTuple[] = [];
+  bikes.forEach((bike: Bike) => {
+    bikeStationCoordinates.push([
+      parseFloat(bike.latitude),
+      parseFloat(bike.longitude),
+      5,
+    ]);
+  });
+
   return (
     <div className="grid flex-col gap-2">
       <div className="card h-auto">
         <BikeStationChart data={bikeStationsData} />
       </div>
       <div className="card pb-0">
-        <Map />
+        <Map data={bikeStationCoordinates} />
       </div>
     </div>
   );
