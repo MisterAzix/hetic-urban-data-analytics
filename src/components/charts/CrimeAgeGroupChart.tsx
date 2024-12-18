@@ -9,13 +9,13 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-const chartData = [
-  { group: 'minor', crimes: 275, fill: 'var(--color-minor)' },
-  { group: 'young', crimes: 200, fill: 'var(--color-young)' },
-  { group: 'adult', crimes: 187, fill: 'var(--color-adult)' },
-  { group: 'mature', crimes: 173, fill: 'var(--color-mature)' },
-  { group: 'senior', crimes: 90, fill: 'var(--color-senior)' },
-];
+interface AgeGroupCounts {
+  LESS_THAN_18: number;
+  AGE_18_TO_24: number;
+  AGE_25_TO_44: number;
+  AGE_45_TO_64: number;
+  AGE_65_PLUS: number;
+}
 
 const chartConfig = {
   crimes: {
@@ -43,7 +43,35 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function CrimeAgeGroupChart() {
+export default function CrimeAgeGroupChart({ data }: { data: AgeGroupCounts }) {
+  const chartData = [
+    {
+      group: 'minor',
+      crimes: data.LESS_THAN_18,
+      fill: 'var(--color-minor)',
+    },
+    {
+      group: 'young',
+      crimes: data.AGE_18_TO_24,
+      fill: 'var(--color-young)',
+    },
+    {
+      group: 'adult',
+      crimes: data.AGE_25_TO_44,
+      fill: 'var(--color-adult)',
+    },
+    {
+      group: 'mature',
+      crimes: data.AGE_45_TO_64,
+      fill: 'var(--color-mature)',
+    },
+    {
+      group: 'senior',
+      crimes: data.AGE_65_PLUS,
+      fill: 'var(--color-senior)',
+    },
+  ];
+
   return (
     <ChartContainer config={chartConfig} className="h-64">
       <PieChart>
