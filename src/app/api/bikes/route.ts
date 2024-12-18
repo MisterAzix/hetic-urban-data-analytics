@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 import { BikeService } from '@/servcices/bike.service';
+import { wrapper } from '@/lib/wrapper/wrapper';
 
 // GET: Retrieve all bike stations from the database
-export async function GET(req: Request) {
+export const GET = wrapper(async (req: Request) => {
   const bikeService = new BikeService(process.env.BIKE_API_URL);
-
-  try {
-    const { searchParams } = new URL(req.url);
+   const { searchParams } = new URL(req.url);
     const latitude = searchParams.get('latitude');
     const longitude = searchParams.get('longitude');
     const free_bikes = searchParams.get('free_bikes');
@@ -20,13 +19,6 @@ export async function GET(req: Request) {
       empty_slots,
       total_capacity,
     });
-
-    return NextResponse.json(bikeStations);
-  } catch (error) {
-    console.error('Error retrieving bike stations:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch bike stations' },
-      { status: 500 },
-    );
-  }
-}
+  
+  return NextResponse.json(bikeStations);
+});
