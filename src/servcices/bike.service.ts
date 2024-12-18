@@ -1,9 +1,5 @@
 import prisma from '@/lib/prisma';
 
-type Optional<T> = {
-  [K in keyof T]?: T[K] | undefined | null;
-};
-
 export type GetBikeStationsParams = Optional<{
   latitude: string;
   longitude: string;
