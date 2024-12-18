@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import HttpStatusCode from '../HttpStatusCode';
+import { StatusCodes } from 'http-status-codes';
 
 interface Handler {
   (req: Request): Promise<any>;
@@ -14,7 +14,7 @@ export const wrapper =
       console.error('Error handling request:', error);
       return NextResponse.json(
         { error: `Internal Server Error: ${error}` },
-        { status: HttpStatusCode.INTERNAL_SERVER_ERROR },
+        { status: StatusCodes.INTERNAL_SERVER_ERROR },
       );
     }
   };
