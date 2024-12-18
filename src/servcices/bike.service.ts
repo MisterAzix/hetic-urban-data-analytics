@@ -1,11 +1,15 @@
 import prisma from '@/lib/prisma';
 
-export type GetBikeStationsParams = Partial<{
-  latitude: number;
-  longitude: number;
-  free_bikes: number;
-  empty_slots: number;
-  total_capacity: number;
+type Optional<T> = {
+  [K in keyof T]?: T[K] | undefined | null;
+};
+
+export type GetBikeStationsParams = Optional<{
+  latitude: string;
+  longitude: string;
+  free_bikes: string;
+  empty_slots: string;
+  total_capacity: string;
 }>;
 
 export class BikeService {
@@ -27,11 +31,11 @@ export class BikeService {
   }: GetBikeStationsParams) {
     return prisma.bikeStation.findMany({
       where: {
-        latitude,
-        longitude,
-        free_bikes,
-        empty_slots,
-        total_capacity,
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+        free_bikes: Number(free_bikes),
+        empty_slots: Number(empty_slots),
+        total_capacity: Number(total_capacity),
       },
     });
   }
