@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { BikeService } from '@/servcices/bike.service';
 
-// GET: Retrieve all bike stations from the database
 export async function GET() {
   const bikeService = new BikeService(process.env.BIKE_API_URL);
 
