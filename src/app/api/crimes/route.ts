@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AGE_GROUP, NEW_YORK_BOROUGH } from '@prisma/client';
 import { CrimeService } from '@/servcices/crime.service';
-import { wrapper } from '@/lib/wrapper/wrapper';
+import {  wrapperWithoutContext } from '@/lib/wrapper/wrapper';
 
 export type GetCrimesParams = {
   age_group?: AGE_GROUP;
@@ -11,7 +11,7 @@ export type GetCrimesParams = {
 };
 
 // GET: Retrieve crimes from the database
-export const GET = wrapper(async (req: Request) => {
+export const GET = wrapperWithoutContext(async (req: Request) => {
   const crimeService = new CrimeService(process.env.CRIME_API_URL);
 
   const { searchParams } = new URL(req.url);
