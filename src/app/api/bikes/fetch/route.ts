@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { BikeService } from '@/servcices/bike.service';
+import { BikeService } from '@/services/bike.service';
 
 export async function POST() {
   const bikeService = new BikeService(process.env.BIKE_API_URL);

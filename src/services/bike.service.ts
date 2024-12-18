@@ -18,7 +18,7 @@ export class BikeService {
     this.apiUrl = apiUrl;
   }
 
-  async getBikeStation(id: string) {
+  async getBikeStationById(id: string) {
     return prisma.bikeStation.findUnique({
       where: { id },
     });

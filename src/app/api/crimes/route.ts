@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AGE_GROUP, NEW_YORK_BOROUGH } from '@prisma/client';
-import { CrimeService } from '@/servcices/crime.service';
-import {  wrapperWithoutContext } from '@/lib/wrapper/wrapper';
+import { CrimeService } from '@/services/crime.service';
+import { wrapperWithoutContext } from '@/lib/wrapper/wrapper';
 
 export type GetCrimesParams = {
   age_group?: AGE_GROUP;
