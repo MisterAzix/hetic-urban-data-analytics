@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
-// GET: Retrieve all bike stations from the database
 export async function GET() {
   try {
     const bikeStations = await prisma.bikeStation.findMany();
