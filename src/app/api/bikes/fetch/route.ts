@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import { BikeService } from '@/servcices/bike.service';
+import { BikeService } from '@/services/bike.service';
 
 export async function POST() {
   const bikeService = new BikeService(process.env.BIKE_API_URL);
+  console.log('======POST CONTROLLER======');
 
   try {
-    await bikeService.createBikeStations();
+    await bikeService.fetchBikeStationsFromApi();
   } catch (error) {
     console.error('Error creating bike stations:', error);
     return NextResponse.json(
