@@ -9,15 +9,6 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-const chartData = [
-  { month: 'Janvier', crimes: 186 },
-  { month: 'Février', crimes: 305 },
-  { month: 'Mars', crimes: 237 },
-  { month: 'Avril', crimes: 73 },
-  { month: 'Mai', crimes: 209 },
-  { month: 'Juin', crimes: 214 },
-];
-
 const chartConfig = {
   crimes: {
     label: 'Crimes',
@@ -25,9 +16,28 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function CrimeFrequencyChart() {
+export default function CrimeFrequencyChart({
+  data,
+}: {
+  data: { [key: string]: number };
+}) {
+  const chartData = [
+    { month: 'Janvier', crimes: data.january },
+    { month: 'Février', crimes: data.february },
+    { month: 'Mars', crimes: data.march },
+    { month: 'Avril', crimes: data.april },
+    { month: 'Mai', crimes: data.may },
+    { month: 'Juin', crimes: data.june },
+    { month: 'Juillet', crimes: data.july },
+    { month: 'Août', crimes: data.august },
+    { month: 'Septembre', crimes: data.september },
+  ];
+
   return (
-    <ChartContainer config={chartConfig} className="h-64 w-full px-4">
+    <ChartContainer
+      config={chartConfig}
+      className="h-64 w-full overflow-auto px-4"
+    >
       <LineChart
         accessibilityLayer
         data={chartData}

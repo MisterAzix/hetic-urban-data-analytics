@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CrimeService } from '@/servcices/crime.service';
+import { CrimeService } from '@/services/crime.service';
 
 export async function POST() {
   const crimeService = new CrimeService(process.env.CRIME_API_URL);
