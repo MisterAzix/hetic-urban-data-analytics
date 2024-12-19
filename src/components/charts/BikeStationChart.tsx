@@ -2,19 +2,13 @@
 
 import * as React from 'react';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-
-interface BikeStation {
-  date: string;
-  free_bikes: number;
-  empty_slots: number;
-}
+import { BikeStationData } from '../tabs/BikeTab';
 
 const chartConfig = {
   free_bikes: {
@@ -27,18 +21,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function Component({ data }: { data: BikeStation[] }) {
+export default function BikeStationChart({
+  data,
+}: {
+  data: BikeStationData[];
+}) {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('free_bikes');
 
-  const chartData = data;
-
   const total = React.useMemo(
     () => ({
-      free_bikes: chartData.reduce((acc, curr) => acc + curr.free_bikes, 0),
-      empty_slots: chartData.reduce((acc, curr) => acc + curr.empty_slots, 0),
+      free_bikes: data.reduce((acc, curr) => acc + curr.free_bikes, 0),
+      empty_slots: data.reduce((acc, curr) => acc + curr.empty_slots, 0),
     }),
-    [chartData],
+    [data],
   );
 
   return (
@@ -70,8 +66,8 @@ export default function Component({ data }: { data: BikeStation[] }) {
       </div>
       <ChartContainer config={chartConfig} className="h-64 w-full p-4">
         <BarChart
-          accessibilityLayer
-          data={chartData}
+          accessibilityLayer={true}
+          data={data}
           margin={{
             left: 12,
             right: 12,
@@ -85,8 +81,7 @@ export default function Component({ data }: { data: BikeStation[] }) {
             tickMargin={8}
             minTickGap={32}
             tickFormatter={(value) => {
-              const date = new Date(value);
-              return date.toLocaleDateString('fr-FR', {
+              return new Date(value).toLocaleDateString('fr-FR', {
                 month: 'short',
                 day: 'numeric',
               });

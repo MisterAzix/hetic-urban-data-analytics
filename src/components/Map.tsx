@@ -1,12 +1,11 @@
 'use client';
 
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
-import 'leaflet-defaulticon-compatibility';
-
+import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet.heat';
-import React, { useEffect, useRef } from 'react';
+import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
+import 'leaflet/dist/leaflet.css';
 
 export default function Map({ data }: { data: L.HeatLatLngTuple[] }) {
   const mapRef = useRef<L.Map | null>(null);
