@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import prisma from '../lib/prisma';
 import { Prisma } from '@prisma/client';
 
 export type GetBikeStationsParams = Optional<{
@@ -48,32 +48,8 @@ export class BikeService {
     });
   }
 
-  async createBikeStation(createBikeStationDto: Prisma.BikeStationCreateInput) {
-    return await prisma.bikeStation.create({ data: createBikeStationDto });
-  }
-
-  async updateBikeStation(
-    id: string,
-    updateBikeStationDto: Prisma.BikeStationUpdateInput,
-  ) {
-    return await prisma.bikeStation.update({
-      where: { id },
-      data: updateBikeStationDto,
-    });
-  }
-
-  async createBikeStationHistory(
-    createBikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput,
-  ) {
-    return await prisma.bikeStationHistory.create({
-      data: createBikeStationHistoryDto,
-    });
-  }
-
   async fetchBikeStationsFromApi() {
     try {
-      console.log('======Fetching bike stations from API======');
-
       const response = await fetch(this.apiUrl);
       const data = await response.json();
       const bikeStations = data.network.stations;
@@ -125,5 +101,29 @@ export class BikeService {
       console.error('Error fetching bike API!', error);
       throw new Error('Failed to fetch bike API!');
     }
+  }
+
+  private async createBikeStation(
+    createBikeStationDto: Prisma.BikeStationCreateInput,
+  ) {
+    return await prisma.bikeStation.create({ data: createBikeStationDto });
+  }
+
+  private async updateBikeStation(
+    id: string,
+    updateBikeStationDto: Prisma.BikeStationUpdateInput,
+  ) {
+    return await prisma.bikeStation.update({
+      where: { id },
+      data: updateBikeStationDto,
+    });
+  }
+
+  private async createBikeStationHistory(
+    createBikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput,
+  ) {
+    return await prisma.bikeStationHistory.create({
+      data: createBikeStationHistoryDto,
+    });
   }
 }
