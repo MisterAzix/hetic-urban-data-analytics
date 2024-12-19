@@ -32,9 +32,6 @@ importers:
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
-      leaflet-defaulticon-compatibility:
-        specifier: ^0.1.2
-        version: 0.1.2
       leaflet.heat:
         specifier: ^0.2.0
         version: 0.2.0
@@ -53,6 +50,9 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
+      react-leaflet:
+        specifier: ^4.2.1
+        version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recharts:
         specifier: ^2.15.0
         version: 2.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -511,6 +511,13 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  '@react-leaflet/core@2.1.0':
+    resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
+    peerDependencies:
+      leaflet: ^1.9.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -1742,9 +1749,6 @@ packages:
     resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
     engines: {node: '>=0.10'}
 
-  leaflet-defaulticon-compatibility@0.1.2:
-    resolution: {integrity: sha512-IrKagWxkTwzxUkFIumy/Zmo3ksjuAu3zEadtOuJcKzuXaD76Gwvg2Z1mLyx7y52ykOzM8rAH5ChBs4DnfdGa6Q==}
-
   leaflet.heat@0.2.0:
     resolution: {integrity: sha512-Cd5PbAA/rX3X3XKxfDoUGi9qp78FyhWYurFg3nsfhntcM/MCNK08pRkf4iEenO1KNqwVPKCmkyktjW3UD+h9bQ==}
 
@@ -2185,6 +2189,13 @@ packages:
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
+
+  react-leaflet@4.2.1:
+    resolution: {integrity: sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==}
+    peerDependencies:
+      leaflet: ^1.9.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
 
   react-smooth@4.0.4:
     resolution: {integrity: sha512-gnGKTpYwqL0Iii09gHobNolvX4Kiq4PKx6eWBCYYix+8cdw+cGo3do906l1NBPKkSWx1DghC1dlWG9L2uGd61Q==}
@@ -3062,6 +3073,12 @@ snapshots:
       react: 18.3.1
     optionalDependencies:
       '@types/react': 18.3.17
+
+  '@react-leaflet/core@2.1.0(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      leaflet: 1.9.4
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@rtsao/scc@1.1.0': {}
 
@@ -4524,8 +4541,6 @@ snapshots:
     dependencies:
       language-subtag-registry: 0.3.23
 
-  leaflet-defaulticon-compatibility@0.1.2: {}
-
   leaflet.heat@0.2.0: {}
 
   leaflet@1.9.4: {}
@@ -4872,6 +4887,13 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@18.3.1: {}
+
+  react-leaflet@4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@react-leaflet/core': 2.1.0(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      leaflet: 1.9.4
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-smooth@4.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
