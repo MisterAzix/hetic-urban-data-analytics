@@ -1,5 +1,16 @@
 # 🗄️ Hetic Urban Data Analytics 🗄️
 
+---
+
+## 📝️ Table of contents 📝#
+
+- [How to run the project](#how-to-run-the-project)
+- [Data models️](#data-models)
+- [Documentation de l'API](#documentation-de-lapi)
+- [👤️ Authors 👤](#-authors-)
+
+---
+
 ## How to run the project
 
 1. Clone the repository
@@ -38,6 +49,8 @@ pnpx prisma migrate dev
 pnpm dev
 ```
 
+---
+
 ## Data models
 
 ### Crime
@@ -67,20 +80,15 @@ pnpm dev
 | total_capacity | Int      |
 | empty_slots    | Int      |
 
---- 
-# Documentation de l'API
+---
+
+## Documentation de l'API
 
 L'API permet d'accéder aux données des stations de vélos et des crimes, avec des options de filtrage sur les crimes.
 
----
-
-## Table des matières
-
-1. [Endpoints](#endpoints)
+## Routes list
    - [GET /api/bikes](#get-apibikes)
    - [GET /api/crimes](#get-apicrimes)
-
----
 
 ## Endpoints
 
@@ -114,8 +122,6 @@ Récupère la liste complète des stations de vélos.
 ]
 ```
 
----
-
 ### **GET /api/crimes**
 
 #### Description
@@ -148,13 +154,12 @@ Récupère les données des crimes depuis la base de données avec des filtres f
 ]
 ```
 
----
-
-## Accéder aux Endpoints
+### Accéder aux Endpoints
 
 1. **Stations de vélos** : Accédez à l'URL `http://localhost:3000/api/bikes` pour récupérer toutes les stations de vélos.
 2. **Crimes** : Accédez à `http://localhost:3000/api/crimes` et utilisez les paramètres de requête pour filtrer les résultats (optionnel).
 
+---
 
 ## 👤️ Authors 👤
 

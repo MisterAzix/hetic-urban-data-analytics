@@ -34,14 +34,14 @@ model BikeStation {
 }
 
 model BikeStationHistory {
-  id            String      @id @default(uuid())
-  bikeStationId String
-  bikeStation   BikeStation @relation(fields: [bikeStationId], references: [id], onDelete: Cascade)
-  timestamp     DateTime
-  free_bikes    Int
-  empty_slots   Int
+  id                    String      @id @default(uuid())
+  bikeStationExternalId String
+  bikeStation           BikeStation @relation(fields: [bikeStationExternalId], references: [external_id], onDelete: Cascade)
+  timestamp             DateTime
+  free_bikes            Int
+  empty_slots           Int
 
-  @@index([bikeStationId, timestamp], name: "bikeStation_timestamp_idx")
+  @@index([bikeStationExternalId, timestamp], name: "bikeStation_timestamp_idx")
 }
 
 enum NEW_YORK_BOROUGH {
