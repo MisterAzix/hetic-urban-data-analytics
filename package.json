@@ -2,7 +2,7 @@
   "name": "hetic-urban-data-analytics",
   "version": "0.1.0",
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "pnpx ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "private": true,
   "scripts": {
