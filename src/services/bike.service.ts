@@ -82,9 +82,7 @@ export class BikeService {
             // Save the current state to BikeStationHistory
             const bikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput =
               {
-                bikeStation: {
-                  connect: { external_id: existingStation.external_id },
-                },
+                bikeStationId: existingStation.id,
                 timestamp: existingStation.timestamp,
                 free_bikes: existingStation.free_bikes,
                 empty_slots: existingStation.empty_slots,
@@ -122,7 +120,7 @@ export class BikeService {
   }
 
   private async createBikeStationHistory(
-    createBikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput,
+    createBikeStationHistoryDto: Prisma.BikeStationCreateInput,
   ) {
     return await prisma.bikeStationHistory.create({
       data: createBikeStationHistoryDto,

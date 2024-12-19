@@ -15,7 +15,12 @@ interface Bike {
 }
 
 export default async function BikeTab() {
-  const data = await fetch('http://localhost:3000/api/bikes/');
+  
+  const bikeApiUrl = process.env.BIKE_API_URL;
+  if (!bikeApiUrl) {
+    throw new Error('BIKE_API_URL is not defined');
+  }
+  const data = await fetch(bikeApiUrl);
   const bikes = await data.json();
 
   // Statistiques sur les stations

@@ -33,16 +33,26 @@ async function main() {
 
   // Seed the BikeStation data
   for (const station of bikeStationData) {
-    await prisma.bikeStation.create({
-      data: {
+    await prisma.bikeStation.upsert({
+      where: { external_id: station.external_id },
+      update: {
+        name: station.name,
+        latitude: station.latitude,
+        longitude: station.longitude,
+        timestamp: station.timestamp,
+        free_bikes: station.free_bikes,
+        total_capacity: station.total_capacity,
+        empty_slots: station.empty_slots,
+      },
+      create: {
         external_id: station.external_id,
         name: station.name,
         latitude: station.latitude,
         longitude: station.longitude,
         timestamp: station.timestamp,
         free_bikes: station.free_bikes,
-        empty_slots: station.empty_slots,
         total_capacity: station.total_capacity,
+        empty_slots: station.empty_slots,
       },
     });
   }

@@ -15,7 +15,10 @@ interface Crime {
 }
 
 export default async function CrimeTab() {
-  const data = await fetch('http://localhost:3000/api/crimes/');
+  if (!process.env.CRIME_API_URL) {
+    throw new Error('CRIME_API_URL is not defined');
+  }
+  const data = await fetch(process.env.CRIME_API_URL);
   const crimes = await data.json();
 
   // Types de crimes
