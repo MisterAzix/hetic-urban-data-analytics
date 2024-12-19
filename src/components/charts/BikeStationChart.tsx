@@ -118,6 +118,7 @@ export default function BikeStationChart({
                   }}
                 />
               }
+              isAnimationActive={false}
             />
             <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
           </BarChart>
