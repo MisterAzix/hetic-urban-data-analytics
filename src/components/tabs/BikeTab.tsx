@@ -44,13 +44,9 @@ export default async function BikeTab() {
   });
 
   return (
-    <div className="grid flex-col gap-2">
-      <div className="card h-auto">
-        <BikeStationChart data={bikeStationData} />
-      </div>
-      <div className="card pb-0">
-        <Map data={bikeStationHeatmap} />
-      </div>
+    <div className="grid gap-2">
+      <BikeStationChart data={bikeStationData} />
+      <Map data={bikeStationHeatmap} />
     </div>
   );
 }

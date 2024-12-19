@@ -6,6 +6,8 @@ import L, { HeatLatLngTuple, LatLngExpression } from 'leaflet';
 import 'leaflet.heat';
 import 'leaflet/dist/leaflet.css';
 
+import { Card, CardContent } from './ui/card';
+
 const HeatmapLayer = ({ data }: { data: HeatLatLngTuple[] }) => {
   const map = useMap();
 
@@ -29,9 +31,17 @@ export default function Map({ data }: { data: L.HeatLatLngTuple[] }) {
   const zoom = 11.5;
 
   return (
-    <MapContainer center={center} zoom={zoom} className="h-[512px]">
-      <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
-      <HeatmapLayer data={data} />
-    </MapContainer>
+    <Card>
+      <CardContent className="p-0">
+        <MapContainer
+          center={center}
+          zoom={zoom}
+          className="h-[512px] rounded-lg"
+        >
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
+          <HeatmapLayer data={data} />
+        </MapContainer>
+      </CardContent>
+    </Card>
   );
 }

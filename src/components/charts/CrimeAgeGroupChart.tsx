@@ -1,7 +1,16 @@
 'use client';
 
-import { Pie, PieChart, LabelList } from 'recharts';
+import { DatabaseZapIcon } from 'lucide-react';
+import { LabelList, Pie, PieChart } from 'recharts';
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
@@ -73,23 +82,48 @@ export default function CrimeAgeGroupChart({ data }: { data: AgeGroupCounts }) {
   ];
 
   return (
-    <ChartContainer config={chartConfig} className="h-64">
-      <PieChart>
-        <ChartTooltip
-          content={<ChartTooltipContent nameKey="crimes" hideLabel={true} />}
-        />
-        <Pie data={chartData} dataKey="crimes" nameKey="group">
-          <LabelList
-            dataKey="group"
-            className="fill-background"
-            stroke="none"
-            fontSize={12}
-            formatter={(value: keyof typeof chartConfig) =>
-              chartConfig[value]?.label
-            }
-          />
-        </Pie>
-      </PieChart>
-    </ChartContainer>
+    <Card>
+      <CardHeader>
+        <CardTitle>Par groupes d&apos;âge</CardTitle>
+        <CardDescription>
+          Les crimes commis par catégorie d&apos;âge
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-1 pb-0">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-64 [&_.recharts-text]:fill-background"
+        >
+          <PieChart>
+            <ChartTooltip
+              content={
+                <ChartTooltipContent nameKey="crimes" hideLabel={true} />
+              }
+              isAnimationActive={false}
+            />
+            <Pie data={chartData} dataKey="crimes">
+              <LabelList
+                dataKey="group"
+                className="fill-background"
+                stroke="none"
+                fontSize={12}
+                formatter={(value: keyof typeof chartConfig) =>
+                  chartConfig[value]?.label
+                }
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex items-center gap-1 font-medium leading-none">
+          <DatabaseZapIcon className="h-4 w-4" />
+          Données récupérées sur NYC Open Data
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Sur les 1000 derniers crimes référencés
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
