@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 import {
   ChartConfig,
@@ -10,10 +10,8 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-interface BikeStation {
-  date: string;
-  free_bikes: number;
-  empty_slots: number;
+interface BikeStationChartProps {
+  data: Array<{ date: string; free_bikes: number; empty_slots: number }>;
 }
 
 const chartConfig = {
@@ -27,18 +25,16 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function Component({ data }: { data: BikeStation[] }) {
+export default function BikeStationChart({ data }: BikeStationChartProps) {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('free_bikes');
 
-  const chartData = data;
-
   const total = React.useMemo(
     () => ({
-      free_bikes: chartData.reduce((acc, curr) => acc + curr.free_bikes, 0),
-      empty_slots: chartData.reduce((acc, curr) => acc + curr.empty_slots, 0),
+      free_bikes: data.reduce((acc, curr) => acc + curr.free_bikes, 0),
+      empty_slots: data.reduce((acc, curr) => acc + curr.empty_slots, 0),
     }),
-    [chartData],
+    [data],
   );
 
   return (
@@ -71,7 +67,7 @@ export default function Component({ data }: { data: BikeStation[] }) {
       <ChartContainer config={chartConfig} className="h-64 w-full p-4">
         <BarChart
           accessibilityLayer
-          data={chartData}
+          data={data}
           margin={{
             left: 12,
             right: 12,
@@ -87,27 +83,30 @@ export default function Component({ data }: { data: BikeStation[] }) {
             tickFormatter={(value) => {
               const date = new Date(value);
               return date.toLocaleDateString('fr-FR', {
-                month: 'short',
-                day: 'numeric',
+          month: 'short',
+          day: 'numeric',
               });
             }}
           />
-          <ChartTooltip
+          <YAxis />
+          <Tooltip
             content={
               <ChartTooltipContent
-                className="w-44"
-                labelFormatter={(value) => {
-                  return new Date(value).toLocaleDateString('fr-FR', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  });
-                }}
+          className="w-44"
+          labelFormatter={(value) => {
+            return new Date(value).toLocaleDateString('fr-FR', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            });
+          }}
               />
             }
             animationDuration={0}
           />
-          <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
+          <Legend />
+          <Bar name="Vélos disponibles" dataKey="free_bikes" fill={chartConfig.free_bikes.color} />
+          <Bar name="Places vides" dataKey="empty_slots" fill={chartConfig.empty_slots.color} />
         </BarChart>
       </ChartContainer>
     </div>
