@@ -19,6 +19,21 @@ export const GET = wrapperWithoutContext(async (req: Request) => {
       empty_slots,
       total_capacity,
     });
-  
-  return NextResponse.json(bikeStations);
+    try {
+      const bikeStations = await bikeService.getBikeStations({
+        latitude,
+        longitude,
+        free_bikes,
+        empty_slots,
+        total_capacity,
+      });
+      return NextResponse.json(bikeStations);
+    } catch (error) {
+      console.error('Error retrieving bike stations:', error);
+      if (error instanceof Error) {
+        return NextResponse.json({ error: `Internal Server Error: ${error.message}` }, { status: 500 });
+      } else {
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+      }
+    }
 });
