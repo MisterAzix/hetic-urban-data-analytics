@@ -1,7 +1,16 @@
 'use client';
 
+import { DatabaseZapIcon } from 'lucide-react';
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
@@ -50,24 +59,41 @@ export default function CrimeTypeChart({
   ];
 
   return (
-    <ChartContainer config={chartConfig} className="h-64">
-      <RadarChart data={chartData}>
-        <ChartTooltip
-          content={<ChartTooltipContent hideLabel={true} />}
-          isAnimationActive={false}
-        />
-        <PolarAngleAxis dataKey="type" />
-        <PolarGrid />
-        <Radar
-          dataKey="crimes"
-          fill="var(--color-crimes)"
-          fillOpacity={0.6}
-          dot={{
-            r: 4,
-            fillOpacity: 1,
-          }}
-        />
-      </RadarChart>
-    </ChartContainer>
+    <Card>
+      <CardHeader>
+        <CardTitle>Types de crimes</CardTitle>
+        <CardDescription>Les 6 types de crimes les plus commis</CardDescription>
+      </CardHeader>
+      <CardContent className="pb-0">
+        <ChartContainer config={chartConfig} className="max-h-64 w-full">
+          <RadarChart data={chartData}>
+            <ChartTooltip
+              content={<ChartTooltipContent hideLabel={true} />}
+              isAnimationActive={false}
+            />
+            <PolarAngleAxis dataKey="type" />
+            <PolarGrid />
+            <Radar
+              dataKey="crimes"
+              fill="var(--color-crimes)"
+              fillOpacity={0.6}
+              dot={{
+                r: 4,
+                fillOpacity: 1,
+              }}
+            />
+          </RadarChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex items-center gap-1 font-medium leading-none">
+          <DatabaseZapIcon className="h-4 w-4" />
+          Données récupérées sur NYC Open Data
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Sur les 1000 derniers crimes référencés
+        </div>
+      </CardFooter>
+    </Card>
   );
 }

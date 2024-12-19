@@ -1,30 +1,47 @@
 'use client';
 
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
-import 'leaflet-defaulticon-compatibility';
-
-import L from 'leaflet';
+import { useEffect } from 'react';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import L, { HeatLatLngTuple, LatLngExpression } from 'leaflet';
 import 'leaflet.heat';
-import React, { useEffect, useRef } from 'react';
+import 'leaflet/dist/leaflet.css';
 
-export default function Map({ data }: { data: L.HeatLatLngTuple[] }) {
-  const mapRef = useRef<L.Map | null>(null);
+import { Card, CardContent } from './ui/card';
+
+const HeatmapLayer = ({ data }: { data: HeatLatLngTuple[] }) => {
+  const map = useMap();
 
   useEffect(() => {
-    if (mapRef.current) return;
+    const heatLayer = L.heatLayer(data, {
+      radius: 20,
+      blur: 10,
+    });
+    heatLayer.addTo(map);
 
-    mapRef.current = L.map('map').setView(
-      [40.73061, -73.935242],
-      11.5,
-    ) as L.Map;
+    return () => {
+      map.removeLayer(heatLayer);
+    };
+  }, [data, map]);
 
-    L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    ).addTo(mapRef.current);
+  return null;
+};
 
-    L.heatLayer(data, { radius: 20 }).addTo(mapRef.current);
-  }, [data]);
+export default function Map({ data }: { data: L.HeatLatLngTuple[] }) {
+  const center: LatLngExpression = [40.73061, -73.935242];
+  const zoom = 11.5;
 
-  return <div id="map" className="h-[512px]"></div>;
+  return (
+    <Card>
+      <CardContent className="p-0">
+        <MapContainer
+          center={center}
+          zoom={zoom}
+          className="h-[512px] rounded-lg"
+        >
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
+          <HeatmapLayer data={data} />
+        </MapContainer>
+      </CardContent>
+    </Card>
+  );
 }

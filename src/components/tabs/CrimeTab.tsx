@@ -2,17 +2,7 @@ import CrimeTypeChart from '@/components/charts/CrimeTypeChart';
 import CrimeAgeGroupChart from '@/components/charts/CrimeAgeGroupChart';
 import CrimeFrequencyChart from '@/components/charts/CrimeFrequencyChart';
 
-interface Crime {
-  external_id: string;
-  latitude: string;
-  longitude: string;
-  age_group: string;
-  sex: string;
-  race: string;
-  summons_date: string;
-  offense_description: string;
-  borough: string;
-}
+import { Crime } from '@prisma/client';
 
 export default async function CrimeTab() {
   const data = await fetch('http://localhost:3000/api/crimes/');
@@ -91,23 +81,10 @@ export default async function CrimeTab() {
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      <div className="card">
-        <h2 className="p-4 text-2xl font-semibold">Types de crimes</h2>
-        <div className="chart">
-          <CrimeTypeChart data={offenseCounts} />
-        </div>
-      </div>
-      <div className="card">
-        <h2 className="p-4 text-2xl font-semibold">Groupes d&apos;âge</h2>
-        <div className="chart">
-          <CrimeAgeGroupChart data={ageGroupCounts} />
-        </div>
-      </div>
-      <div className="card col-span-2">
-        <h2 className="p-4 text-2xl font-semibold">Fréquence</h2>
-        <div className="chart">
-          <CrimeFrequencyChart data={monthlyCrimeCounts} />
-        </div>
+      <CrimeTypeChart data={offenseCounts} />
+      <CrimeAgeGroupChart data={ageGroupCounts} />
+      <div className="col-span-2">
+        <CrimeFrequencyChart data={monthlyCrimeCounts} />
       </div>
     </div>
   );
