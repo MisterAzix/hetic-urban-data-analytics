@@ -43,8 +43,7 @@ export class CrimeService {
   async createCrimes() {
     try {
       const response = await fetch(this.apiUrl);
-      const data = await response.json();
-      const crimes = data.data;
+      const crimes = await response.json();
 
       for (const crime of crimes) {
         const ageGroup = formatAgeGroup(crime.age_group);
