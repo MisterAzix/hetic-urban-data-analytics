@@ -9,7 +9,7 @@ export const fetchBikeStationData = async () => {
   const bikeStationData: BikeStationData[] = [];
   const bikeStationUniqueDate: string[] = [];
   bikes.forEach((bike: BikeStation) => {
-    const date = bike.timestamp.toString().split('T')[0];
+    const date = bike.timestamp.toString().split(':').slice(0, 2).join(':'); // Extract date and time up to minutes
     if (!bikeStationUniqueDate.includes(date)) {
       bikeStationUniqueDate.push(date);
       bikeStationData.push({

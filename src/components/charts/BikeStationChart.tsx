@@ -121,6 +121,8 @@ export default function BikeStationChart({
                 return date.toLocaleDateString('fr-FR', {
                   month: 'short',
                   day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
                 });
               }}
             />
@@ -134,6 +136,8 @@ export default function BikeStationChart({
                       month: 'short',
                       day: 'numeric',
                       year: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
                     });
                   }}
                 />
