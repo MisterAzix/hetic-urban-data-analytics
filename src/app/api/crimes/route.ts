@@ -20,12 +20,17 @@ export const GET = wrapperWithoutContext(async (req: Request) => {
   const summons_date = searchParams.get('summons_date');
   const offense_description = searchParams.get('offense_description');
 
-  const crimes = await crimeService.getCrimes(
-    age_group,
-    borough,
-    summons_date,
-    offense_description,
-  );
-
-  return NextResponse.json(crimes);
+  try {
+    const crimes = await crimeService.getCrimes(
+      age_group,
+      borough,
+      summons_date,
+      offense_description,
+    );
+    return NextResponse.json(crimes);
+  } catch (error) {
+    console.error('Error retrieving crimes:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: `Internal Server Error: ${errorMessage}` }, { status: 500 });
+  }
 });
