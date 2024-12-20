@@ -117,8 +117,7 @@ export default function BikeStationChart({
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString('fr-FR', {
+                return new Date(value).toLocaleDateString('fr-FR', {
                   month: 'short',
                   day: 'numeric',
                   hour: 'numeric',
@@ -129,7 +128,7 @@ export default function BikeStationChart({
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-[150px]"
+                  className="w-48"
                   nameKey="free_bikes"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString('fr-FR', {
