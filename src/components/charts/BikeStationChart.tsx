@@ -17,10 +17,10 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-import { BikeStation } from '@prisma/client';
 import { BikeStationData } from '../tabs/BikeTab';
 
 import { useSocket } from '@/context/SocketProvider';
+import { fetchBikeStationData } from '@/lib/bikes.utils';
 
 const chartConfig = {
   free_bikes: {
@@ -45,8 +45,8 @@ export default function BikeStationChart({
 
   const totalData = React.useMemo(
     () => ({
-      free_bikes: dataState.reduce((acc, curr) => acc + curr.free_bikes, 0),
-      empty_slots: dataState.reduce((acc, curr) => acc + curr.empty_slots, 0),
+      free_bikes: dataState[dataState.length - 1].free_bikes,
+      empty_slots: dataState[dataState.length - 1].empty_slots,
     }),
     [dataState],
   );
@@ -57,29 +57,7 @@ export default function BikeStationChart({
     }
 
     const refreshData = async () => {
-      const data = await fetch('http://localhost:3000/api/bikes/', {
-        cache: 'no-store',
-      });
-      const bikes = await data.json();
-      const bikeStationData: BikeStationData[] = [];
-      const bikeStationUniqueDate: string[] = [];
-      bikes.forEach((bike: BikeStation) => {
-        const date = bike.timestamp.toString().split('T')[0];
-        if (!bikeStationUniqueDate.includes(date)) {
-          bikeStationUniqueDate.push(date);
-          bikeStationData.push({
-            date: date,
-            free_bikes: bike.free_bikes,
-            empty_slots: bike.empty_slots,
-          });
-        } else {
-          const dateIndex = bikeStationData.findIndex(
-            (data) => data.date === date,
-          );
-          bikeStationData[dateIndex].free_bikes += bike.free_bikes;
-          bikeStationData[dateIndex].empty_slots += bike.empty_slots;
-        }
-      });
+      const bikeStationData = await fetchBikeStationData();
       setDataState(bikeStationData);
     };
 
@@ -139,23 +117,26 @@ export default function BikeStationChart({
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString('fr-FR', {
+                return new Date(value).toLocaleDateString('fr-FR', {
                   month: 'short',
                   day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
                 });
               }}
             />
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-[150px]"
+                  className="w-48"
                   nameKey="free_bikes"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString('fr-FR', {
                       month: 'short',
                       day: 'numeric',
                       year: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
                     });
                   }}
                 />
