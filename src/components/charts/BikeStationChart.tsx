@@ -17,10 +17,10 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-import { BikeStation } from '@prisma/client';
 import { BikeStationData } from '../tabs/BikeTab';
 
 import { useSocket } from '@/context/SocketProvider';
+import { fetchBikeStationData } from '@/lib/bikes.utils';
 
 const chartConfig = {
   free_bikes: {
@@ -57,29 +57,7 @@ export default function BikeStationChart({
     }
 
     const refreshData = async () => {
-      const data = await fetch('http://localhost:3000/api/bikes/', {
-        cache: 'no-store',
-      });
-      const bikes = await data.json();
-      const bikeStationData: BikeStationData[] = [];
-      const bikeStationUniqueDate: string[] = [];
-      bikes.forEach((bike: BikeStation) => {
-        const date = bike.timestamp.toString().split('T')[0];
-        if (!bikeStationUniqueDate.includes(date)) {
-          bikeStationUniqueDate.push(date);
-          bikeStationData.push({
-            date: date,
-            free_bikes: bike.free_bikes,
-            empty_slots: bike.empty_slots,
-          });
-        } else {
-          const dateIndex = bikeStationData.findIndex(
-            (data) => data.date === date,
-          );
-          bikeStationData[dateIndex].free_bikes += bike.free_bikes;
-          bikeStationData[dateIndex].empty_slots += bike.empty_slots;
-        }
-      });
+      const bikeStationData = await fetchBikeStationData();
       setDataState(bikeStationData);
     };
 

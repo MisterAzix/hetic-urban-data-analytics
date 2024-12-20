@@ -3,6 +3,7 @@ import BikeStationChart from '@/components/charts/BikeStationChart';
 
 import { HeatLatLngTuple } from 'leaflet';
 import { BikeStation } from '@prisma/client';
+import { fetchBikeStationData } from '@/lib/bikes.utils';
 
 export interface BikeStationData {
   date: string;
@@ -16,24 +17,7 @@ export default async function BikeTab() {
   });
   const bikes = await data.json();
 
-  // Statistiques sur les stations
-  const bikeStationData: BikeStationData[] = [];
-  const bikeStationUniqueDate: string[] = [];
-  bikes.forEach((bike: BikeStation) => {
-    const date = bike.timestamp.toString().split('T')[0];
-    if (!bikeStationUniqueDate.includes(date)) {
-      bikeStationUniqueDate.push(date);
-      bikeStationData.push({
-        date: date,
-        free_bikes: bike.free_bikes,
-        empty_slots: bike.empty_slots,
-      });
-    } else {
-      const dateIndex = bikeStationData.findIndex((data) => data.date === date);
-      bikeStationData[dateIndex].free_bikes += bike.free_bikes;
-      bikeStationData[dateIndex].empty_slots += bike.empty_slots;
-    }
-  });
+  const bikeStationData = await fetchBikeStationData();
 
   // Carte des stations
   const bikeStationHeatmap: HeatLatLngTuple[] = [];
