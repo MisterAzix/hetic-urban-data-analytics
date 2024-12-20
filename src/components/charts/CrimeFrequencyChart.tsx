@@ -1,7 +1,7 @@
 'use client';
 
 import { DatabaseZapIcon } from 'lucide-react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import {
   Card,
@@ -25,11 +25,17 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+interface CrimeFrequencyChartProps {
+  data: { [key: string]: number };
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
 export default function CrimeFrequencyChart({
   data,
-}: {
-  data: { [key: string]: number };
-}) {
+  startDate,
+  endDate,
+}: CrimeFrequencyChartProps) {
   const chartData = [
     { month: 'Janvier', crimes: data.january },
     { month: 'Février', crimes: data.february },
@@ -40,7 +46,23 @@ export default function CrimeFrequencyChart({
     { month: 'Juillet', crimes: data.july },
     { month: 'Août', crimes: data.august },
     { month: 'Septembre', crimes: data.september },
+    { month: 'Octobre', crimes: data.october },
+    { month: 'Novembre', crimes: data.november },
+    { month: 'Décembre', crimes: data.december },
   ];
+
+  // Filtrer les données pour exclure les mois sans crimes
+  const filteredChartData = chartData.filter((entry) => entry.crimes !== undefined && entry.crimes !== 0);
+
+  // Filtrer les données en fonction des dates sélectionnées
+  const finalChartData = filteredChartData.filter((entry, index) => {
+    const monthIndex = index + 1; // Les mois sont indexés de 0 à 11
+    const entryDate = new Date(`2023-${monthIndex.toString().padStart(2, '0')}-01`);
+    if (startDate && endDate) {
+      return entryDate >= startDate && entryDate <= endDate;
+    }
+    return true;
+  });
 
   return (
     <Card>
@@ -54,7 +76,7 @@ export default function CrimeFrequencyChart({
         <ChartContainer config={chartConfig} className="h-64 w-full">
           <AreaChart
             accessibilityLayer={true}
-            data={chartData}
+            data={finalChartData}
             margin={{
               left: 12,
               right: 12,
@@ -68,6 +90,7 @@ export default function CrimeFrequencyChart({
               tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
             />
+            <YAxis />
             <ChartTooltip
               cursor={false}
               content={
