@@ -8,7 +8,6 @@ export const fetchBikeStationData = async () => {
   const bikes = await data.json();
 
   const bikeStationData: BikeStationData[] = [];
-  const bikeStationUniqueDate: string[] = [];
 
   bikes.forEach((bike: BikeStation) => {
     bike.BikeStationHistory.forEach((bikeHistory: BikeStationHistory) => {
@@ -17,17 +16,16 @@ export const fetchBikeStationData = async () => {
         .split(':')
         .slice(0, 2)
         .join(':');
-      if (!bikeStationUniqueDate.includes(date)) {
-        bikeStationUniqueDate.push(date);
+
+      const dateIndex = bikeStationData.findIndex((data) => data.date === date);
+
+      if (dateIndex === -1) {
         bikeStationData.push({
           date: date,
           free_bikes: bikeHistory.free_bikes,
           empty_slots: bikeHistory.empty_slots,
         });
       } else {
-        const dateIndex = bikeStationData.findIndex(
-          (data) => data.date === date,
-        );
         bikeStationData[dateIndex].free_bikes += bikeHistory.free_bikes;
         bikeStationData[dateIndex].empty_slots += bikeHistory.empty_slots;
       }
