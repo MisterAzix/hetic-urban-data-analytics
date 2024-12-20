@@ -17,7 +17,10 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
+import { BikeStation } from '@prisma/client';
 import { BikeStationData } from '../tabs/BikeTab';
+
+import { useSocket } from '@/context/SocketProvider';
 
 const chartConfig = {
   free_bikes: {
@@ -35,16 +38,55 @@ export default function BikeStationChart({
 }: {
   data: BikeStationData[];
 }) {
+  const { socket, isConnected } = useSocket();
+  const [dataState, setDataState] = React.useState<BikeStationData[]>(data);
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('free_bikes');
 
-  const total = React.useMemo(
+  const totalData = React.useMemo(
     () => ({
-      free_bikes: data.reduce((acc, curr) => acc + curr.free_bikes, 0),
-      empty_slots: data.reduce((acc, curr) => acc + curr.empty_slots, 0),
+      free_bikes: dataState.reduce((acc, curr) => acc + curr.free_bikes, 0),
+      empty_slots: dataState.reduce((acc, curr) => acc + curr.empty_slots, 0),
     }),
-    [data],
+    [dataState],
   );
+
+  React.useEffect(() => {
+    if (!isConnected) {
+      return;
+    }
+
+    const refreshData = async () => {
+      const data = await fetch('http://localhost:3000/api/bikes/', {
+        cache: 'no-store',
+      });
+      const bikes = await data.json();
+      const bikeStationData: BikeStationData[] = [];
+      const bikeStationUniqueDate: string[] = [];
+      bikes.forEach((bike: BikeStation) => {
+        const date = bike.timestamp.toString().split('T')[0];
+        if (!bikeStationUniqueDate.includes(date)) {
+          bikeStationUniqueDate.push(date);
+          bikeStationData.push({
+            date: date,
+            free_bikes: bike.free_bikes,
+            empty_slots: bike.empty_slots,
+          });
+        } else {
+          const dateIndex = bikeStationData.findIndex(
+            (data) => data.date === date,
+          );
+          bikeStationData[dateIndex].free_bikes += bike.free_bikes;
+          bikeStationData[dateIndex].empty_slots += bike.empty_slots;
+        }
+      });
+      setDataState(bikeStationData);
+    };
+
+    socket.on('bikes', () => {
+      refreshData();
+    });
+  }, [isConnected, socket]);
 
   return (
     <Card>
@@ -69,7 +111,7 @@ export default function BikeStationChart({
                   {chartConfig[chart].label}
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
+                  {totalData[key as keyof typeof totalData].toLocaleString()}
                 </span>
               </button>
             );
@@ -83,7 +125,7 @@ export default function BikeStationChart({
         >
           <BarChart
             accessibilityLayer
-            data={data}
+            data={dataState}
             margin={{
               left: 12,
               right: 12,
@@ -118,6 +160,7 @@ export default function BikeStationChart({
                   }}
                 />
               }
+              isAnimationActive={false}
             />
             <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
           </BarChart>
