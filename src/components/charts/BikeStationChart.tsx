@@ -45,8 +45,8 @@ export default function BikeStationChart({
 
   const totalData = React.useMemo(
     () => ({
-      free_bikes: dataState.reduce((acc, curr) => acc + curr.free_bikes, 0),
-      empty_slots: dataState.reduce((acc, curr) => acc + curr.empty_slots, 0),
+      free_bikes: dataState[dataState.length - 1].free_bikes,
+      empty_slots: dataState[dataState.length - 1].empty_slots,
     }),
     [dataState],
   );
