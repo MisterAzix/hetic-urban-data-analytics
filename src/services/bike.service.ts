@@ -111,7 +111,7 @@ export class BikeService {
   }
 
   private async createBikeStationHistory(
-    createBikeStationHistoryDto: Prisma.BikeStationCreateInput,
+    createBikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput,
   ) {
     return await prisma.bikeStationHistory.create({
       data: createBikeStationHistoryDto,
