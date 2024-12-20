@@ -96,6 +96,7 @@ export default function CrimeFrequencyChart({
               content={
                 <ChartTooltipContent hideLabel={true} indicator="line" />
               }
+              isAnimationActive={false}
             />
             <Area
               dataKey="crimes"

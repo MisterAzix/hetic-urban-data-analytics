@@ -71,27 +71,18 @@ export class BikeService {
         };
 
         if (existingStation) {
-          // Check if data has changed
-          const fieldsToCompare = ['free_bikes', 'empty_slots'] as const;
+          const bikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput = {
+            bikeStation: {
+              connect: { external_id: existingStation.external_id },
+            },
+            timestamp: existingStation.timestamp,
+            free_bikes: existingStation.free_bikes,
+            empty_slots: existingStation.empty_slots,
+          };
+          await this.createBikeStationHistory(bikeStationHistoryDto);
 
-          const hasChanged = fieldsToCompare.some(
-            (key) => newData[key] !== existingStation[key],
-          );
-
-          if (hasChanged) {
-            // Save the current state to BikeStationHistory
-            const bikeStationHistoryDto: Prisma.BikeStationHistoryCreateInput =
-              {
-                bikeStationId: existingStation.id,
-                timestamp: existingStation.timestamp,
-                free_bikes: existingStation.free_bikes,
-                empty_slots: existingStation.empty_slots,
-              };
-            await this.createBikeStationHistory(bikeStationHistoryDto);
-
-            // Update the BikeStation with new data
-            await this.updateBikeStation(existingStation.id, newData);
-          }
+          // Update the BikeStation with new data
+          await this.updateBikeStation(existingStation.id, newData);
         } else {
           // Create a new BikeStation if it doesn't exist
           await this.createBikeStation(newData);
